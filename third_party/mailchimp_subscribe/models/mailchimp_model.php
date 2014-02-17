@@ -121,7 +121,6 @@ class Mailchimp_model extends CI_Model {
   {
     parent::__construct();
 
-
     $this->_extension_class = 'Mailchimp_subscribe_ext';
     $this->_version         = '2.1.0';
     $this->_ee              =& get_instance();
@@ -213,12 +212,12 @@ class Mailchimp_model extends CI_Model {
         'priority'  => 10
       ),
       array(
-        'hook'    => 'safecracker_registration_register_member',
+        'hook'    => 'safecracker_register_submit_entry_end',
         'method'  => 'safecracker_registration_register_member',
         'priority'  => 10
       ),
       array(
-        'hook'    => 'safecracker_registration_edit_member',
+        'hook'    => 'safecracker_register_submit_entry_end',
         'method'  => 'safecracker_registration_edit_member',
         'priority'  => 10
       )
@@ -595,6 +594,9 @@ class Mailchimp_model extends CI_Model {
       ));
 
       Omnilogger::log($omnilog_entry);
+    } else {
+      $this->_ee->load->library('logger');
+      $this->_ee->logger->developer('['.$this->_extension_class . ' ' . $this->_version .']: '.$message);
     }
   }
 
@@ -1341,6 +1343,7 @@ class Mailchimp_model extends CI_Model {
     $update = FALSE
   )
   {
+    var_dump($member_id);die;
     // Check that we have a member ID.
     if ( ! $member_id)
     {
@@ -1400,6 +1403,8 @@ class Mailchimp_model extends CI_Model {
         $unsubscribe_from[] = $list;
       }
     }
+
+    var_dump($subscribe_to, $unsubscribe_from);die;
 
     // Do we have an work to do?
     if (count($subscribe_to) == 0
