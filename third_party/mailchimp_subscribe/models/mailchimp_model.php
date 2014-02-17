@@ -1343,7 +1343,6 @@ class Mailchimp_model extends CI_Model {
     $update = FALSE
   )
   {
-    var_dump($member_id);die;
     // Check that we have a member ID.
     if ( ! $member_id)
     {
@@ -1404,7 +1403,6 @@ class Mailchimp_model extends CI_Model {
       }
     }
 
-    var_dump($subscribe_to, $unsubscribe_from);die;
 
     // Do we have an work to do?
     if (count($subscribe_to) == 0
